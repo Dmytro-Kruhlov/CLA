@@ -12,6 +12,7 @@ from Infinity.exceptions import PhoneMustBeNumber, BirthdayException, EmailExcep
 from Infinity.sort_folder import sort
 from Infinity.suggest import suggest_command
 from Infinity.note import note_book
+from Infinity.user_interface import IUserOutput, ConsoleOutput, RichConsoleOutput
 
 I = 1
 
@@ -441,12 +442,12 @@ def parser(user_input: str):
     return no_command, user_input
 
 
-def main():
+def main(output_interface: IUserOutput):
 
     global I
     if I == 1:
         address_book.load_data()
-        print(address_book_commands())
+        output_interface.output(address_book_commands())
         I += 1
 
     while True:
@@ -457,11 +458,12 @@ def main():
         user_data = get_user_name(user_info)
 
         result = command(user_data)
-        print(result)
+        output_interface.output(result)
 
         if command == exit_command:
             break
 
 
 if __name__ == "__main__":
-    main()
+    # main(ConsoleOutput())
+    main(RichConsoleOutput())

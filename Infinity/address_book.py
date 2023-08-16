@@ -31,22 +31,22 @@ class AdressBook(UserDict):
         found_records_list = []
         for name, rec in self.data.items():
 
-            if rec.phones != None and rec.phones != []:
+            if rec.phones is not None and rec.phones != []:
                 phones = ' '.join(str(p) for p in rec.phones)
             else:
                 phones = 'N/A'
 
-            if rec.birthday != None:
+            if rec.birthday is not None:
                 birthday = str(rec.birthday.value.date())
             else:
                 birthday = 'N/A'
 
-            if rec.emails != None and rec.emails != []:
+            if rec.emails is not None and rec.emails != []:
                 emails = ' '.join(str(p) for p in rec.emails)
             else:
                 emails = 'N/A'
 
-            if rec.user_address != None:
+            if rec.user_address is not None:
                 user_address = str(rec.user_address)
             else:
                 user_address = "N/A"
