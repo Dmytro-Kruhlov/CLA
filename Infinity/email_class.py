@@ -8,7 +8,11 @@ class Email(IField):
         self.__value = None
         self.value = value
 
-    @IField.value.setter
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
     def value(self, value):
         if re.match(r"([A-Za-z]{1}[A-Za-z0-9._]{1,}@[A-Za-z]+\.[A-Za-z]+\.[A-Za-z]{2,})|([A-Za-z]{1}[A-Za-z0-9._]{1,"
                     r"}@[A-Za-z]+\.[A-Za-z]{2,})", value):

@@ -8,7 +8,11 @@ class Phone(IField):
         self.__value = None
         self.value = value
 
-    @IField.value.setter
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
     def value(self, value):
         sanytized_ph = sanitize_phone_number(value)
         if sanytized_ph is None:

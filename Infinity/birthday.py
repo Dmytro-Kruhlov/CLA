@@ -5,10 +5,14 @@ from Infinity.user_interface import IField
 
 class Birthday(IField):
     def __init__(self, value):
-        super().__init__()
+        self.__value = None
         self.value = value
 
-    @IField.value.setter
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
     def value(self, value):
         try:
             self.__value = datetime.strptime(value, "%Y/%m/%d")
