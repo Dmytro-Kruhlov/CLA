@@ -6,7 +6,7 @@ from Infinity.name import Name, Name_Error
 from Infinity.phone import Phone
 from Infinity.birthday import Birthday
 from Infinity.address_book import AdressBook
-from rich import print
+from rich import print, console
 from rich.table import Table
 from Infinity.exceptions import PhoneMustBeNumber, BirthdayException, EmailException, Name_Error
 from Infinity.sort_folder import sort
@@ -90,7 +90,6 @@ def help_command(args):
 
 
 def show_all_command(args):
-
     if len(address_book.data) == 0:
         return '\nAddress Book is empty!'
 
@@ -126,7 +125,6 @@ def show_all_command(args):
 
 
 def search_command(args):
-
     sample_name = args[0]
     if args[1] != []:
         sample_data = args[1][0]
@@ -175,9 +173,10 @@ def input_error(func):
         except EmailException:
             return "incorrect email"
         except Name_Error:
-            return ("Enter name at least 3 symbols")
+            return "Enter name at least 3 symbols"
         except TypeError:
             return "Format birthday must be YYYY/MM/DD"
+
     return wrapper
 
 
@@ -231,7 +230,6 @@ def delete_record_command(args):
 
 @input_error
 def add_phone_command(args):
-
     if args[0] and len(args[1]) == 1:
         name = args[0]
         record = address_book[name]
@@ -247,7 +245,6 @@ def add_phone_command(args):
 
 @input_error
 def change_phone_command(args):
-
     if args[0] and len(args[1]) == 2:
         name = args[0]
         old_phone, new_phone = args[1]
@@ -405,7 +402,6 @@ COMMANDS = {
 
 
 def get_user_name(user_info: str) -> tuple:
-
     regex_name = r'[a-zA-ZА-Яа-я]+'
     name = ''
     user_address = ''
@@ -443,7 +439,6 @@ def parser(user_input: str):
 
 
 def main(output_interface: IUserOutput):
-
     global I
     if I == 1:
         address_book.load_data()

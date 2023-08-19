@@ -54,12 +54,11 @@ class AdressBook(UserDict):
             user_data_str = f"{name} {phones} {emails} {birthday} {user_address}"
 
             if sample.lower() in user_data_str.lower():
-                user_data_dict = {}
-                user_data_dict["name"] = name
-                user_data_dict["phones"] = phones
-                user_data_dict["birthday"] = birthday
-                user_data_dict["emails"] = emails
-                user_data_dict["address"] = user_address
+                user_data_dict = {"name": name,
+                                  "phones": phones,
+                                  "birthday": birthday,
+                                  "emails": emails,
+                                  "address": user_address}
                 found_records_list.append(user_data_dict)
             else:
                 continue
@@ -72,12 +71,12 @@ class AdressBook(UserDict):
         for name, record in self.data.items():
             user_data = []
             user_name = name
-            if record.birthday != None:
+            if record.birthday is not None:
                 user_birthday = record.birthday.value.date()
             else:
                 user_birthday = 'N/A'
 
-            if record.user_address != None:
+            if record.user_address is not None:
                 user_address = record.user_address.value
             else:
                 user_address = 'N/A'
@@ -87,14 +86,14 @@ class AdressBook(UserDict):
             user_emails_list = []
             user_emails = record.emails
 
-            if record.phones == None or record.phones == []:
+            if record.phones is None or record.phones == []:
                 phones_str = 'N/A'
             else:
                 for phone in user_phones:
                     user_phones_list.append(phone.value)
                 phones_str = ' ,'.join(user_phones_list).strip()
 
-            if record.emails == None or record.emails == []:
+            if record.emails is None or record.emails == []:
                 emails_str = 'N/A'
             else:
                 for email in user_emails:

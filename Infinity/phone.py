@@ -1,26 +1,22 @@
-
 from Infinity.exceptions import PhoneMustBeNumber
 from Infinity.sanytize import sanitize_phone_number
+from Infinity.user_interface import IField
 
 
-class Phone:
+class Phone(IField):
     def __init__(self, value):
         self.__value = None
         self.value = value
 
-    @property
-    def value(self):
-        return self.__value
-
-    @value.setter
+    @IField.value.setter
     def value(self, value):
         sanytized_ph = sanitize_phone_number(value)
-        if sanytized_ph == None:
+        if sanytized_ph is None:
             raise PhoneMustBeNumber
         self.__value = sanytized_ph
 
     def __str__(self) -> str:
-        return self.value
+        return self.__value
 
     def __repr__(self) -> str:
         return str(self)

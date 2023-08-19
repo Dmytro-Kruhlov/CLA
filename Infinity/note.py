@@ -125,12 +125,12 @@ def open_in_default_editor(filename: str) -> None:
         print(f"[-] Error opening the file in the default editor: {e}")
 
 
-def note_book() -> None:
+def note_book() -> str:
     if not os.path.exists(NOTES_FOLDER):
         os.mkdir(NOTES_FOLDER)
 
     while True:
-        command = input("\nEnter valid commad or enter \"exit\" to leave>>> ")
+        command = input("\nEnter valid command or enter \"exit\" to leave>>> ")
         parts = command.split()
 
         if not parts:
@@ -142,7 +142,8 @@ def note_book() -> None:
         tags = parts[3:] if len(parts) > 3 else []
 
         if action == 'help':
-            print("[i] Commands: 'add note <name> <tags>', 'delete note <name>', 'edit note <name>', 'edit tags <name>', 'show all', 'search note <name>', 'search tag <tag>', exit")
+            print("[i] Commands: 'add note <name> <tags>', 'delete note <name>', 'edit note <name>', 'edit tags "
+                  "<name>', 'show all', 'search note <name>', 'search tag <tag>', exit")
         elif action == 'add' and sub_action == 'note':
             add_note(note_name, tags)
         elif action == 'delete' and sub_action == 'note':
@@ -160,7 +161,7 @@ def note_book() -> None:
         elif action == 'clear' and len(parts) == 1:
             os.system('cls' if os.name == 'nt' else 'clear')
         elif action == 'exit' and len(parts) == 1:
-            return "End of programm!"
+            return "End of program!"
         else:
             print("[-] Invalid command. Try again.")
 
