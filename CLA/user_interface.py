@@ -9,13 +9,11 @@ class IUserOutput(ABC):
 
 
 class ConsoleOutput(IUserOutput):
-
     def output(self, value):
         print(value)
 
 
 class RichConsoleOutput(IUserOutput):
-
     def output(self, value):
         rich.print(value)
 

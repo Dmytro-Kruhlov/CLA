@@ -3,16 +3,55 @@ from pathlib import Path
 import zipfile
 import uuid
 
-CATEGORIES = {'Images': ['.jpeg', '.png', '.jpg', '.svg'],
-              'Video': ['.avi', '.mp4', '.mov', '.mkv', '.wmv'],
-              'Documents': ['.doc', '.docx', '.txt', '.pdf', '.xlsx', '.pptx'],
-              'Music': ['.mp3', '.ogg', '.wav', '.amr'],
-              'Archives': ['.zip', '.gz', '.tar'],
-              'Unkknown': []}
+CATEGORIES = {
+    "Images": [".jpeg", ".png", ".jpg", ".svg"],
+    "Video": [".avi", ".mp4", ".mov", ".mkv", ".wmv"],
+    "Documents": [".doc", ".docx", ".txt", ".pdf", ".xlsx", ".pptx"],
+    "Music": [".mp3", ".ogg", ".wav", ".amr"],
+    "Archives": [".zip", ".gz", ".tar"],
+    "Unkknown": [],
+}
 
 CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
-TRANSLATION = ("a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u",
-               "f", "h", "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ya", "je", "i", "ji", "g")
+TRANSLATION = (
+    "a",
+    "b",
+    "v",
+    "g",
+    "d",
+    "e",
+    "e",
+    "j",
+    "z",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "r",
+    "s",
+    "t",
+    "u",
+    "f",
+    "h",
+    "ts",
+    "ch",
+    "sh",
+    "sch",
+    "",
+    "y",
+    "",
+    "e",
+    "yu",
+    "ya",
+    "je",
+    "i",
+    "ji",
+    "g",
+)
 
 TRANS = {}
 
@@ -37,7 +76,6 @@ def normalize(text: str) -> str:
 
 def delete_empty_folders(path: Path) -> None:
     for root, dirs, files in os.walk(path, topdown=False):
-
         for folder in dirs:
             folder_path = os.path.join(root, folder)
 
@@ -51,10 +89,12 @@ def move_file(file: Path, root_dir: Path, category: str) -> None:
     if not target_dir.exists():
         target_dir.mkdir()
 
-    new_file_name = target_dir.joinpath(f'{normalize(file.stem)}{file.suffix}')
+    new_file_name = target_dir.joinpath(f"{normalize(file.stem)}{file.suffix}")
 
     if new_file_name.exists():
-        new_file_name = new_file_name.with_name(f"{new_file_name.stem}-{uuid.uuid4()}{file.suffix}")
+        new_file_name = new_file_name.with_name(
+            f"{new_file_name.stem}-{uuid.uuid4()}{file.suffix}"
+        )
 
     file.rename(new_file_name)
 
@@ -65,13 +105,12 @@ def get_categories(file: Path) -> str:
     for cat, exts in CATEGORIES.items():
         if ext in exts:
             return cat
-    cat = 'Unknown'
+    cat = "Unknown"
     return cat
 
 
 def sort_folder(path: Path) -> None:
-    for item in path.glob('**/*'):
-
+    for item in path.glob("**/*"):
         if item.is_file():
             category = get_categories(item)
             move_file(item, path, category)
@@ -82,10 +121,9 @@ def sort_folder(path: Path) -> None:
 
 
 def unzip_archives(path: Path) -> None:
-    path_archives = os.path.join(path, 'Archives')
+    path_archives = os.path.join(path, "Archives")
 
     if os.path.exists(path_archives):
-
         for i in os.listdir(path_archives):
             file_extension = list(os.path.splitext(i))
             folder_name = file_extension[0]
@@ -95,35 +133,37 @@ def unzip_archives(path: Path) -> None:
             if not os.path.exists(extraction_path):
                 os.makedirs(extraction_path)
 
-            with zipfile.ZipFile(os.path.join(path_archives, i), 'r') as zip_ref:
+            with zipfile.ZipFile(os.path.join(path_archives, i), "r") as zip_ref:
                 zip_ref.extractall(extraction_path)
 
 
 def print_lists(path: Path):
-    for item in path.glob('**/*'):
+    for item in path.glob("**/*"):
         if item.is_dir():
             file_list = []
             category_name = item.name
 
-            for file in item.glob('*'):
+            for file in item.glob("*"):
                 file_list.append(file.name)
-            print(f'\nList of {category_name} : {file_list}\n')
+            print(f"\nList of {category_name} : {file_list}\n")
 
 
 def print_all_exrentions(path: Path):
     all_ext_set = set()
 
-    for item in path.glob('**/*'):
+    for item in path.glob("**/*"):
         if item.is_file():
             ext = item.suffix
             all_ext_set.add(ext)
     all_ext_list = list(all_ext_set)
-    print(f'\nList of all found extensions  :  {all_ext_list}\n')
+    print(f"\nList of all found extensions  :  {all_ext_list}\n")
 
 
 def sort():
     try:
-        user_input = input("\nEnter valid path to folder or enter \"exit\" to leave program \n>>>")
+        user_input = input(
+            '\nEnter valid path to folder or enter "exit" to leave program \n>>>'
+        )
 
         if user_input == "exit":
             return "End of program!\n"
@@ -133,13 +173,13 @@ def sort():
 
         path = Path(user_input)
     except IndexError:
-        return print('There is no path to folder! Enter path!')
+        return print("There is no path to folder! Enter path!")
 
     if not path.exists():
-        return print(f'The path <<< {path} >>> doesn\'t exist! Enter valid path!')
+        return print(f"The path <<< {path} >>> doesn't exist! Enter valid path!")
     sort_folder(path)
     return "Folder sorting completed successfully"
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(sort())

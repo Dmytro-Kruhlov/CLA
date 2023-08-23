@@ -18,6 +18,9 @@ infinity = "python -c 'from CLA.main import main, RichConsoleOutput; main(RichCo
 
 
 
+[tool.poetry.group.dev.dependencies]
+black = {extras = ["d"], version = "^23.7.0"}
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

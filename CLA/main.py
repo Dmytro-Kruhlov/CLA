@@ -8,12 +8,20 @@ from CLA.birthday import Birthday
 from CLA.address_book import AdressBook
 from rich import print, console
 from rich.table import Table
-from CLA.exceptions import PhoneMustBeNumber, BirthdayException, EmailException, Name_Error
+from CLA.exceptions import (
+    PhoneMustBeNumber,
+    BirthdayException,
+    EmailException,
+    Name_Error,
+)
 from CLA.sort_folder import sort
 from CLA.suggest import suggest_command
 from CLA.note import note_book
 from CLA.user_interface import IUserOutput, ConsoleOutput, RichConsoleOutput
 
+from loger import get_logger
+
+logger = get_logger(__name__)
 I = 1
 
 address_book = AdressBook()
@@ -25,7 +33,9 @@ def sort_folder_command(args):
 
 def address_book_commands():
     table_address_book = Table(
-        title="\nALL COMMANDS FOR ADDRESS BOOK:\nImportant!!! All entered data must be devided by gap! Phone number must have 10 or 12 digits!\n * - optional paramiters")
+        title="\nALL COMMANDS FOR ADDRESS BOOK:\nImportant!!! All entered data must be devided by gap! Phone number "
+        "must have 10 or 12 digits!\n * - optional paramiters"
+    )
     table_address_book.add_column("COMMAND", justify="left")
     table_address_book.add_column("NAME", justify="left")
     table_address_book.add_column("PHONE NUMBER", justify="left")
@@ -33,46 +43,136 @@ def address_book_commands():
     table_address_book.add_column("BIRTHDAY", justify="left")
     table_address_book.add_column("ADDRESS", justify="left")
     table_address_book.add_column("DESCRIPTION", justify="left")
+    table_address_book.add_row("hello / hi", "-", "-", "-", "-", "-", "Greeting")
     table_address_book.add_row(
-        "hello / hi", "-", "-", "-", "-", "-", "Greeting")
-    table_address_book.add_row("add record", "Any name", "Phone number *",
-                               "Email *", "YYYY-MM-DD *", ": + Address *", "Add new contact")
+        "add record",
+        "Any name",
+        "Phone number *",
+        "Email *",
+        "YYYY-MM-DD *",
+        ": + Address *",
+        "Add new contact",
+    )
     table_address_book.add_row(
-        "delete record", "Name to delete", "-", "-", "-", "-", "Delete contact")
-    table_address_book.add_row("add address / change address",
-                               "Existing name", "-", "-", "-", ": + Address", "Add address")
-    table_address_book.add_row("delete address / remove address", "Existing name",
-                               "-", "-", "-", ": + Address to delete", "Delete address")
-    table_address_book.add_row("add phone", "Existing name",
-                               "Additional phone number", "-", "-", "-", "Add phone number")
-    table_address_book.add_row("change phone", "Existing name",
-                               "Old phone number + new phone number", "-", "-", "-", "Change phone number")
-    table_address_book.add_row("delete phone", 'Existing name',
-                               'Phone nunber to delete *', "-", "-", "-", "Delete phone number")
+        "delete record", "Name to delete", "-", "-", "-", "-", "Delete contact"
+    )
     table_address_book.add_row(
-        "add birthday", 'Existing name', "-", "-", "YYYY-MM-DD", "-", "Add birthday")
-    table_address_book.add_row("days to birthday / dtb", "-", "-",
-                               "-", "-", "-", "Show contact's birthday in chosen period")
+        "add address / change address",
+        "Existing name",
+        "-",
+        "-",
+        "-",
+        ": + Address",
+        "Add address",
+    )
     table_address_book.add_row(
-        "add email", 'Existing name', "-", "Email", "-", "-", "Add email")
-    table_address_book.add_row("change email", 'Existing name',
-                               "-", "Old email + new email", "-", "-", "Change email")
+        "delete address / remove address",
+        "Existing name",
+        "-",
+        "-",
+        "-",
+        ": + Address to delete",
+        "Delete address",
+    )
     table_address_book.add_row(
-        "delete email", 'Existing name', "-", "Email to delete", "-", "-", "Delete email")
+        "add phone",
+        "Existing name",
+        "Additional phone number",
+        "-",
+        "-",
+        "-",
+        "Add phone number",
+    )
     table_address_book.add_row(
-        "show all", "-", "-", "-", "-", "-", "Getting Address Book (by default)")
-    table_address_book.add_row("show all + N", "-", "-", "-",
-                               "-", "-", "Getting Address Book by N records on the page")
-    table_address_book.add_row("search + sample", "-", "-", "-",
-                               "-", "-", 'searching <<< sumple >>> in address book')
+        "change phone",
+        "Existing name",
+        "Old phone number + new phone number",
+        "-",
+        "-",
+        "-",
+        "Change phone number",
+    )
     table_address_book.add_row(
-        "sort", "-", "-", "-", "-", "-", "Sorting folder in the enetered path")
+        "delete phone",
+        "Existing name",
+        "Phone nunber to delete *",
+        "-",
+        "-",
+        "-",
+        "Delete phone number",
+    )
     table_address_book.add_row(
-        "note", "-", "-", "-", "-", "-", "Opens Note Book. Use \"help\" inside Note Book to see all commands ")
+        "add birthday", "Existing name", "-", "-", "YYYY-MM-DD", "-", "Add birthday"
+    )
     table_address_book.add_row(
-        "good bye / close / exit", "-", "-", "-", "-", "-", "Exit")
+        "days to birthday / dtb",
+        "-",
+        "-",
+        "-",
+        "-",
+        "-",
+        "Show contact's birthday in chosen period",
+    )
     table_address_book.add_row(
-        "help", "-", "-", "-", "-", "-", "Printing table of commands")
+        "add email", "Existing name", "-", "Email", "-", "-", "Add email"
+    )
+    table_address_book.add_row(
+        "change email",
+        "Existing name",
+        "-",
+        "Old email + new email",
+        "-",
+        "-",
+        "Change email",
+    )
+    table_address_book.add_row(
+        "delete email",
+        "Existing name",
+        "-",
+        "Email to delete",
+        "-",
+        "-",
+        "Delete email",
+    )
+    table_address_book.add_row(
+        "show all", "-", "-", "-", "-", "-", "Getting Address Book (by default)"
+    )
+    table_address_book.add_row(
+        "show all + N",
+        "-",
+        "-",
+        "-",
+        "-",
+        "-",
+        "Getting Address Book by N records on the page",
+    )
+    table_address_book.add_row(
+        "search + sample",
+        "-",
+        "-",
+        "-",
+        "-",
+        "-",
+        "searching <<< sumple >>> in address book",
+    )
+    table_address_book.add_row(
+        "sort", "-", "-", "-", "-", "-", "Sorting folder in the enetered path"
+    )
+    table_address_book.add_row(
+        "note",
+        "-",
+        "-",
+        "-",
+        "-",
+        "-",
+        'Opens Note Book. Use "help" inside Note Book to see all commands ',
+    )
+    table_address_book.add_row(
+        "good bye / close / exit", "-", "-", "-", "-", "-", "Exit"
+    )
+    table_address_book.add_row(
+        "help", "-", "-", "-", "-", "-", "Printing table of commands"
+    )
     return table_address_book
 
 
@@ -82,7 +182,7 @@ def note_command(args):
 
 def exit_command(args):
     address_book.save_data()
-    return '\nGood bye! Have a nice day!\n'
+    return "\nGood bye! Have a nice day!\n"
 
 
 def help_command(args):
@@ -91,21 +191,21 @@ def help_command(args):
 
 def show_all_command(args):
     if len(address_book.data) == 0:
-        return '\nAddress Book is empty!'
+        return "\nAddress Book is empty!"
 
     n = 10
     k = 1
 
     if len(args[1]) > 0:
-
         try:
             n = int(args[1][0])
         except ValueError:
             print(
-                f'\nEnterd number <<< {args[0]} >>> of pages does not represent a valid integer!\nDefault number of records N = {n} is used')
+                f"\nEnterd number <<< {args[0]} >>> of pages does not represent a valid integer!\nDefault number of "
+                f"records N = {n} is used"
+            )
 
     for block in address_book.iterator(n):
-
         table = Table(title=f"\nADDRESS BOOK page {k}")
         table.add_column("Name", justify="left")
         table.add_column("Phone number", justify="left")
@@ -113,8 +213,9 @@ def show_all_command(args):
         table.add_column("Birthday", justify="left")
         table.add_column("Address", justify="left")
         for item in block:
-            table.add_row(str(item[0]), str(item[1]), str(
-                item[2]), str(item[3]), str(item[4]))
+            table.add_row(
+                str(item[0]), str(item[1]), str(item[2]), str(item[3]), str(item[4])
+            )
         print(table)
         k += 1
 
@@ -126,31 +227,34 @@ def show_all_command(args):
 
 def search_command(args):
     sample_name = args[0]
-    if args[1] != []:
+    if args[1]:
         sample_data = args[1][0]
     else:
         sample_data = ""
 
     sample = sample_name + sample_data
 
-    if sample == '':
+    if sample == "":
         return "\nMissing sample for search!"
 
     found_records_list = address_book.search_sample(sample)
 
     if len(found_records_list) > 0:
-
-        table = Table(
-            title=f"\nALL FOUND RECORDS ACCORDING TO SAMPLE <<< {sample} >>>")
-        table.add_column("Name", justify='left')
+        table = Table(title=f"\nALL FOUND RECORDS ACCORDING TO SAMPLE <<< {sample} >>>")
+        table.add_column("Name", justify="left")
         table.add_column("Phone number", justify="left")
         table.add_column("Email", justify="left")
         table.add_column("Birthday", justify="left")
         table.add_column("Address", justify="left")
 
         for item in found_records_list:
-            table.add_row(item["name"], item["phones"],
-                          item["emails"], item['birthday'], item["address"])
+            table.add_row(
+                item["name"],
+                item["phones"],
+                item["emails"],
+                item["birthday"],
+                item["address"],
+            )
         return table
     else:
         return f"\nThere is now any record according to sample <<< {sample} >>>"
@@ -208,7 +312,7 @@ def add_record(args: tuple[str]) -> str:
 
     rec: Record = address_book.get(str(name))
     if rec:
-        return f'Record with name {str(name)} is already in address book'
+        return f"Record with name {str(name)} is already in address book"
     return address_book.add_record(Record(name, birthday, phone, email, address))
 
 
@@ -278,14 +382,14 @@ def add_birthday_command(args):
 @input_error
 def days_to_birthday_command(args):
     day = int(args[1][0])
-    list_bd = ''
+    list_bd = ""
     for key, value in address_book.items():
         rec = address_book.get(str(key))
         result = rec.check_cont_birthday(day)
         if result:
-            list_bd += f'Contact {key}: birthday through {result[0]} days ({result[1]} years old)\n'
+            list_bd += f"Contact {key}: birthday through {result[0]} days ({result[1]} years old)\n"
     if len(list_bd) < 1:
-        list_bd = f'No birthdays in this period'
+        list_bd = f"No birthdays in this period"
     return list_bd.strip()
 
 
@@ -329,7 +433,9 @@ def change_email_command(args):
         n_email = Email(new_email)
         record = address_book[name]
         record.change_email(o_email, n_email)
-        return f"The email {old_email} for contact {name} has been changed to {new_email}."
+        return (
+            f"The email {old_email} for contact {name} has been changed to {new_email}."
+        )
     else:
         raise ValueError
 
@@ -352,12 +458,14 @@ def delete_email_command(args):
 def no_command(args) -> str:
     suggest = suggest_command(args[0])
     if suggest:
+        logger.error("Wrong command")
         return f'You made a mistake, maybe you mean "{suggest}"? Try again'
-    return 'Unknown command'
+
+    return "Unknown command"
 
 
 def hello_command(args) -> str:
-    return 'How can I help you?'
+    return "How can I help you?"
 
 
 @input_error
@@ -365,7 +473,7 @@ def add_address(args):
     name = Name(args[0])
     rec: Record = address_book.get(str(name))
     if not rec:
-        return f'No record with name {name}'
+        return f"No record with name {name}"
     return rec.add_address(Address(args[2]))
 
 
@@ -374,7 +482,7 @@ def delete_address_command(args):
     name = Name(args[0])
     rec: Record = address_book.get(str(name))
     if not rec:
-        return f'No record with name {name}'
+        return f"No record with name {name}"
     return rec.delete_address()
 
 
@@ -383,29 +491,45 @@ COMMANDS = {
     add_address: ("add address", "change address"),
     change_phone_command: ("change phone",),
     add_phone_command: ("add phone",),
-    exit_command: ("good bye", "close", "exit",),
+    exit_command: (
+        "good bye",
+        "close",
+        "exit",
+    ),
     help_command: ("help",),
     delete_phone_command: ("delete phone",),
     add_birthday_command: ("add birthday",),
     show_all_command: ("show all",),
     search_command: ("search",),
-    hello_command: ("hello", 'hi',),
+    hello_command: (
+        "hello",
+        "hi",
+    ),
     add_email_command: ("add email",),
     change_email_command: ("change email",),
     delete_email_command: ("delete email",),
-    delete_record_command: ("delete record", "remove",),
-    delete_address_command: ("delete address", "remove address",),
-    days_to_birthday_command: ("days to birthday", "dtb",),
+    delete_record_command: (
+        "delete record",
+        "remove",
+    ),
+    delete_address_command: (
+        "delete address",
+        "remove address",
+    ),
+    days_to_birthday_command: (
+        "days to birthday",
+        "dtb",
+    ),
     sort_folder_command: ("sort",),
-    note_command: ("note",)
+    note_command: ("note",),
 }
 
 
 def get_user_name(user_info: str) -> tuple:
-    regex_name = r'[a-zA-ZА-Яа-я]+'
-    name = ''
-    user_address = ''
-    address_separator = ':'
+    regex_name = r"[a-zA-ZА-Яа-я]+"
+    name = ""
+    user_address = ""
+    address_separator = ":"
     if address_separator in user_info:
         data = user_info.split(address_separator)
         user_info_list = data[0].strip().split()
@@ -418,7 +542,7 @@ def get_user_name(user_info: str) -> tuple:
             word = user_info_list[0]
             match_name = re.match(regex_name, word)
             if match_name and len(match_name.group()) == len(word):
-                name = name + word + ' '
+                name = name + word + " "
                 user_info_list.remove(word)
             else:
                 break
@@ -427,12 +551,12 @@ def get_user_name(user_info: str) -> tuple:
 
 
 def parser(user_input: str):
-    user_info = ''
+    user_info = ""
     user_input_lower = user_input.lower()
     for command, kwds in COMMANDS.items():
         for kwd in kwds:
             if user_input_lower.startswith(kwd):
-                user_info = user_input[len(kwd):].strip()
+                user_info = user_input[len(kwd) :].strip()
                 return command, user_info
 
     return no_command, user_input
@@ -446,7 +570,7 @@ def main(output_interface: IUserOutput):
         I += 1
 
     while True:
-        user_input = (input(f'\nEnter command, please!\n\n>>>')).strip()
+        user_input = (input(f"\nEnter command, please!\n\n>>>")).strip()
 
         command, user_info = parser(user_input)
 
@@ -454,6 +578,7 @@ def main(output_interface: IUserOutput):
 
         result = command(user_data)
         output_interface.output(result)
+        logger.debug(f"result = {result}")
 
         if command == exit_command:
             break
