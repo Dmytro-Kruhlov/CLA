@@ -1,5 +1,5 @@
-from Infinity.exceptions import Name_Error
-from Infinity.user_interface import IField
+from CLA.exceptions import Name_Error
+from CLA.user_interface import IField
 
 
 class Name(IField):

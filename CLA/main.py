@@ -1,18 +1,18 @@
 import re
-from Infinity.record import Record
-from Infinity.email_class import Email
-from Infinity.address_class import Address
-from Infinity.name import Name, Name_Error
-from Infinity.phone import Phone
-from Infinity.birthday import Birthday
-from Infinity.address_book import AdressBook
+from CLA.record import Record
+from CLA.email_class import Email
+from CLA.address_class import Address
+from CLA.name import Name, Name_Error
+from CLA.phone import Phone
+from CLA.birthday import Birthday
+from CLA.address_book import AdressBook
 from rich import print, console
 from rich.table import Table
-from Infinity.exceptions import PhoneMustBeNumber, BirthdayException, EmailException, Name_Error
-from Infinity.sort_folder import sort
-from Infinity.suggest import suggest_command
-from Infinity.note import note_book
-from Infinity.user_interface import IUserOutput, ConsoleOutput, RichConsoleOutput
+from CLA.exceptions import PhoneMustBeNumber, BirthdayException, EmailException, Name_Error
+from CLA.sort_folder import sort
+from CLA.suggest import suggest_command
+from CLA.note import note_book
+from CLA.user_interface import IUserOutput, ConsoleOutput, RichConsoleOutput
 
 I = 1
 

@@ -1,4 +1,4 @@
-from Infinity.user_interface import IField
+from CLA.user_interface import IField
 
 
 class Address(IField):

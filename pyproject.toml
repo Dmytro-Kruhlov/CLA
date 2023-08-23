@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "CLA"
+version = "0.1.0"
+description = ""
+authors = ["Dmytro-Kruhlov <hazzy1451@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+rich = "^13.5.2"
+zipp = "^3.16.2"
+spacy = "^3.6.0"
+levenshtein = "0.21.1"
+en-core-web-md = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.6.0/en_core_web_md-3.6.0-py3-none-any.whl"}
+
+[tool.poetry.scripts]
+infinity = "python -c 'from CLA.main import main, RichConsoleOutput; main(RichConsoleOutput())'"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

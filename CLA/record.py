@@ -1,9 +1,9 @@
-from Infinity.name import Name
-from Infinity.phone import Phone
-from Infinity.birthday import Birthday
-from Infinity.email_class import Email
+from CLA.name import Name
+from CLA.phone import Phone
+from CLA.birthday import Birthday
+from CLA.email_class import Email
 from datetime import datetime
-from Infinity.address_class import Address
+from CLA.address_class import Address
 
 
 class Record:

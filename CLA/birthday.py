@@ -1,6 +1,6 @@
-from Infinity.exceptions import BirthdayException
+from CLA.exceptions import BirthdayException
 from datetime import datetime, date
-from Infinity.user_interface import IField
+from CLA.user_interface import IField
 
 
 class Birthday(IField):

@@ -1,6 +1,6 @@
-from Infinity.exceptions import EmailException
+from CLA.exceptions import EmailException
 import re
-from Infinity.user_interface import IField
+from CLA.user_interface import IField
 
 
 class Email(IField):

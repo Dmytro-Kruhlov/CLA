@@ -1,6 +1,6 @@
-from Infinity.exceptions import PhoneMustBeNumber
-from Infinity.sanytize import sanitize_phone_number
-from Infinity.user_interface import IField
+from CLA.exceptions import PhoneMustBeNumber
+from CLA.sanytize import sanitize_phone_number
+from CLA.user_interface import IField
 
 
 class Phone(IField):
