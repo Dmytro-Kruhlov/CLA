@@ -1,22 +1,27 @@
-
 import spacy
 import Levenshtein
 
 nlp = spacy.load("en_core_web_md")
 
 COMMANDS = [
-    'add record',
-    "change phone", "add phone",
-    'exit',
-    'help', "delete phone",
-    "del phone", "add birthday",
-    'show all',
-    'search', 'hello',
+    "add record",
+    "change phone",
+    "add phone",
+    "exit",
+    "help",
+    "delete phone",
+    "del phone",
+    "add birthday",
+    "show all",
+    "search",
+    "hello",
     "add email",
     "delete email",
     "change email",
-    "delete record", "remove",
-    "days to birthday", "sort"
+    "delete record",
+    "remove",
+    "days to birthday",
+    "sort",
 ]
 
 
@@ -34,6 +39,3 @@ def suggest_command(user_input):
             closest_keyword = keyword
 
     return closest_keyword
-
-
-

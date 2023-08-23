@@ -4,7 +4,6 @@ import pickle
 
 
 class AdressBook(UserDict):
-
     def add_record(self, record: Record):
         self.data[record.name.value] = record
         self.save_data()
@@ -17,34 +16,33 @@ class AdressBook(UserDict):
 
     def load_data(self):
         try:
-            with open('address_book.bin', "rb") as file:
+            with open("address_book.bin", "rb") as file:
                 self.data = pickle.load(file)
 
         except FileNotFoundError:
-            print('\nAddress book is empty!')
+            print("\nAddress book is empty!")
 
     def save_data(self):
-        with open('address_book.bin', "wb") as file:
+        with open("address_book.bin", "wb") as file:
             pickle.dump(self.data, file)
 
     def search_sample(self, sample: str):
         found_records_list = []
         for name, rec in self.data.items():
-
             if rec.phones is not None and rec.phones != []:
-                phones = ' '.join(str(p) for p in rec.phones)
+                phones = " ".join(str(p) for p in rec.phones)
             else:
-                phones = 'N/A'
+                phones = "N/A"
 
             if rec.birthday is not None:
                 birthday = str(rec.birthday.value.date())
             else:
-                birthday = 'N/A'
+                birthday = "N/A"
 
             if rec.emails is not None and rec.emails != []:
-                emails = ' '.join(str(p) for p in rec.emails)
+                emails = " ".join(str(p) for p in rec.emails)
             else:
-                emails = 'N/A'
+                emails = "N/A"
 
             if rec.user_address is not None:
                 user_address = str(rec.user_address)
@@ -54,18 +52,19 @@ class AdressBook(UserDict):
             user_data_str = f"{name} {phones} {emails} {birthday} {user_address}"
 
             if sample.lower() in user_data_str.lower():
-                user_data_dict = {"name": name,
-                                  "phones": phones,
-                                  "birthday": birthday,
-                                  "emails": emails,
-                                  "address": user_address}
+                user_data_dict = {
+                    "name": name,
+                    "phones": phones,
+                    "birthday": birthday,
+                    "emails": emails,
+                    "address": user_address,
+                }
                 found_records_list.append(user_data_dict)
             else:
                 continue
         return found_records_list
 
     def iterator(self, n):
-
         count = 0
         data_list = []
         for name, record in self.data.items():
@@ -74,12 +73,12 @@ class AdressBook(UserDict):
             if record.birthday is not None:
                 user_birthday = record.birthday.value.date()
             else:
-                user_birthday = 'N/A'
+                user_birthday = "N/A"
 
             if record.user_address is not None:
                 user_address = record.user_address.value
             else:
-                user_address = 'N/A'
+                user_address = "N/A"
 
             user_phones_list = []
             user_phones = record.phones
@@ -87,25 +86,23 @@ class AdressBook(UserDict):
             user_emails = record.emails
 
             if record.phones is None or record.phones == []:
-                phones_str = 'N/A'
+                phones_str = "N/A"
             else:
                 for phone in user_phones:
                     user_phones_list.append(phone.value)
-                phones_str = ' ,'.join(user_phones_list).strip()
+                phones_str = " ,".join(user_phones_list).strip()
 
             if record.emails is None or record.emails == []:
-                emails_str = 'N/A'
+                emails_str = "N/A"
             else:
                 for email in user_emails:
                     user_emails_list.append(email.value)
-                emails_str = ' ,'.join(user_emails_list).strip()
+                emails_str = " ,".join(user_emails_list).strip()
 
-            user_data = [user_name, phones_str,
-                         emails_str, user_birthday, user_address]
+            user_data = [user_name, phones_str, emails_str, user_birthday, user_address]
             data_list.append(user_data)
             count += 1
             if count >= n:
-
                 yield data_list
                 count = 0
                 data_list = []
