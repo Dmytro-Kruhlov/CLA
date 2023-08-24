@@ -19,7 +19,7 @@ from CLA.suggest import suggest_command
 from CLA.note import note_book
 from CLA.user_interface import IUserOutput, ConsoleOutput, RichConsoleOutput
 
-from loger import get_logger
+from CLA.loger import get_logger
 
 logger = get_logger(__name__)
 I = 1
@@ -562,7 +562,8 @@ def parser(user_input: str):
     return no_command, user_input
 
 
-def main(output_interface: IUserOutput):
+def main():
+    output_interface = RichConsoleOutput()
     global I
     if I == 1:
         address_book.load_data()
@@ -586,4 +587,4 @@ def main(output_interface: IUserOutput):
 
 if __name__ == "__main__":
     # main(ConsoleOutput())
-    main(RichConsoleOutput())
+    main()

@@ -14,7 +14,7 @@ levenshtein = "0.21.1"
 en-core-web-md = {url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.6.0/en_core_web_md-3.6.0-py3-none-any.whl"}
 
 [tool.poetry.scripts]
-infinity = "python -c 'from CLA.main import main, RichConsoleOutput; main(RichConsoleOutput())'"
+infinity = "CLA.main:main"
 
 
 
