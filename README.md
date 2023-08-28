@@ -72,6 +72,12 @@ pip install -r requirements.txt
 ```bash
 python assistant.py
 ```
+## Open in Docker container
+
+1. docker build . -t "name image"
+
+2. docker run -it "name image"
+
 
 ## License
 
@@ -83,3 +89,5 @@ This project is licensed under the MIT License.
 - [Michael Ivanov](https://github.com/MikeIV2007)
 - [Artem Dorofeev](https://github.com/artem-dorofeev)
 - [Igor Yevtushenko](https://github.com/II-777)
+
+
